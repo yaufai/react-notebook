@@ -1,3 +1,4 @@
 import React from "react"
+import TopLevel from "./src/TopLevel"
 
-export default () => <div>Hello, world!</div>
+export default () => <TopLevel />
