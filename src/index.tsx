@@ -1,6 +1,6 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import ImportedApp from "./context-example/App"
+import ImportedApp from "./option-selector/App"
 
 export default function App() {
     return <ImportedApp />
