@@ -1,19 +1,8 @@
-import React, { Component } from "react";
+import React from "react"
+import RewritableText from "./src/RewritableText"
 
-type RewritableTextProps = {
-    defaultValue: string
-    onChange    : (e: Event) => void
-}
-
-type RewritableTextState = {
-    value: string
-}
-
-export default class RewritableText extends Component<RewritableTextProps, {}> {
-    constructor(props: RewritableTextProps) {
-        super(props)
-        this.state = {
-            value: this.props.defaultValue
-        }
-    }
-}
+export default () => <RewritableText
+    defaultValue="ここのテキストは編集できます"
+    onChange={(value) => { console.log(value) }}
+    onFinalized={(value) => { console.log("GET FINALIZED VALUE: ", value) }}
+/>
