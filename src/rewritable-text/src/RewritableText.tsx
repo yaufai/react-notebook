@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, ReactHTMLElement } from "react";
 
 type RewritableTextProps = {
     defaultValue: string
@@ -13,11 +13,19 @@ type RewritableTextState = {
 
 
 export default class RewritableText extends Component<RewritableTextProps, RewritableTextState> {
+    myRef: React.RefObject<HTMLInputElement>
     constructor(props: RewritableTextProps) {
         super(props)
         this.state = {
             value: this.props.defaultValue,
             isEditing: false
+        }
+        this.myRef = React.createRef<HTMLInputElement>()
+    }
+
+    componentDidUpdate() {
+        if (this.state.isEditing) {
+            this.myRef.current?.focus()
         }
     }
 
@@ -50,6 +58,7 @@ export default class RewritableText extends Component<RewritableTextProps, Rewri
             onBlur={this.toggleEditing}
             onChange={(e) => this.onValueChange(e.target.value)}
             onKeyUp={this.finalizeByKey}
+            ref={this.myRef}
         ></input>
         return this.state.isEditing ? editor : text
     }
