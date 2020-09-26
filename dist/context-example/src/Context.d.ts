@@ -5,3 +5,4 @@ export declare type Context = {
 };
 export declare const defaultContext: Context;
 export declare const MyContext: React.Context<Context>;
+//# sourceMappingURL=Context.d.ts.map

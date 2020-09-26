@@ -4,3 +4,4 @@ export declare type SelectorModalProps = {
     toggle: () => void;
 };
 export default function SelectorModal(props: SelectorModalProps): JSX.Element;
+//# sourceMappingURL=SelectorModal.d.ts.map

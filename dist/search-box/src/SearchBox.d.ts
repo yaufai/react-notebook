@@ -6,3 +6,4 @@ declare type SearchBoxProps<T> = {
 };
 export default function SearchBox<T>(props: SearchBoxProps<T>): JSX.Element;
 export {};
+//# sourceMappingURL=SearchBox.d.ts.map

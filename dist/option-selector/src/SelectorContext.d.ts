@@ -9,3 +9,4 @@ export declare const SelectorContext: React.Context<{
     isSelected: (id: string) => boolean;
     getOptionById: (id: string) => Selectable | undefined;
 }>;
+//# sourceMappingURL=SelectorContext.d.ts.map

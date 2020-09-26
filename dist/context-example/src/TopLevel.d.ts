@@ -6,3 +6,4 @@ export default class TopLevel extends Component<{}, {
     toggle: () => void;
     render(): JSX.Element;
 }
+//# sourceMappingURL=TopLevel.d.ts.map

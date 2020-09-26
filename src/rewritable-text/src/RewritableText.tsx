@@ -1,65 +1,77 @@
-import React, { Component, ReactHTMLElement } from "react";
+import React, { ReactElement, useState,  } from "react"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faPencilAlt } from "@fortawesome/free-solid-svg-icons"
 
 type RewritableTextProps = {
-    defaultValue: string
-    onChange    : (newValue: string) => void
-    onFinalized : (value: string) => void
+    defaultValue: string,
+    displayWhenEmpty: string|ReactElement,
+    onChange: (value: string) => void,
+    onFinalized: (value: string) => void,
+    validation: (value: string) => boolean,
+    validationErrMsg: (value: string) => string
 }
 
-type RewritableTextState = {
-    value: string,
-    isEditing: boolean
-}
+export default function RewritableText(props: RewritableTextProps) {
+    let [value, setValue] = useState(props.defaultValue)
+    let [isEditing, setIsEditing] = useState(false)
+    let [hasError, setHasError] = useState(false)
 
+    let toggleEditing = () => setIsEditing(!isEditing)
 
-export default class RewritableText extends Component<RewritableTextProps, RewritableTextState> {
-    myRef: React.RefObject<HTMLInputElement>
-    constructor(props: RewritableTextProps) {
-        super(props)
-        this.state = {
-            value: this.props.defaultValue,
-            isEditing: false
-        }
-        this.myRef = React.createRef<HTMLInputElement>()
+    let finalize = (e?: React.FocusEvent<HTMLInputElement>) => {
+        props.onFinalized(value)
+        toggleEditing()
     }
 
-    componentDidUpdate() {
-        if (this.state.isEditing) {
-            this.myRef.current?.focus()
+    let onKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter" && props.validation(value)) {
+            finalize()
         }
     }
 
-    toggleEditing = () => {
-        if (this.state.isEditing) {
-            this.props.onFinalized(this.state.value)
-        }
-        this.setState({isEditing: !this.state.isEditing})
+    let commonStyle = {
+        fontSize: "14px",
+        paddingTop: "5px",
+        paddingBottom: "5px",
+        paddingRight: "8px",
+        paddingLeft: "8px"
     }
 
-    onValueChange = (newValue: string) => {
-        this.props.onChange(newValue)
-        this.setState({ value: newValue })
-    }
+    let text = <div onClick={toggleEditing} style={{ cursor: "pointer" }}>
+        <span style={{ ...commonStyle, marginRight: "3px" }}>
+            {value !== "" ? value : props.displayWhenEmpty}
+        </span>
+        <FontAwesomeIcon icon={faPencilAlt} />
+    </div>
 
-    finalizeByKey = (e: React.KeyboardEvent) => {
-        if (e.key.toLowerCase() === "enter") {
-            e.preventDefault()
-            this.toggleEditing()
-        }
-    }
-
-    render() {
-        let text = <div onClick={this.toggleEditing}>
-            {this.state.value}
+    let editor = <div>
+        <input
+            value={value}
+            onBlur={(e) => {
+                if (props.validation(value)) {
+                    finalize(e)
+                }
+            }}
+            onChange={(e) => {
+                let newValue = e.target.value
+                props.onChange(newValue)
+                setValue(newValue)
+                setHasError(!props.validation(newValue))
+            }}
+            onKeyUp={onKeyUp}
+            autoFocus={true}
+            style={{
+                ...commonStyle,
+                width: "100%"
+            }}
+        />
+        <div style={{
+            color: "red",
+            visibility: hasError ? "visible" : "hidden"
+        }}>
+            {props.validationErrMsg(value)}
         </div>
-
-        let editor = <input
-            value={this.state.value}
-            onBlur={this.toggleEditing}
-            onChange={(e) => this.onValueChange(e.target.value)}
-            onKeyUp={this.finalizeByKey}
-            ref={this.myRef}
-        ></input>
-        return this.state.isEditing ? editor : text
-    }
+    </div>
+    
+    return isEditing ? editor : text
 }

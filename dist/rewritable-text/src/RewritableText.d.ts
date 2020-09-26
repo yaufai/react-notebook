@@ -1,18 +1,12 @@
-import React, { Component } from "react";
+import { ReactElement } from "react";
 declare type RewritableTextProps = {
     defaultValue: string;
-    onChange: (newValue: string) => void;
+    displayWhenEmpty: string | ReactElement;
+    onChange: (value: string) => void;
     onFinalized: (value: string) => void;
+    validation: (value: string) => boolean;
+    validationErrMsg: (value: string) => string;
 };
-declare type RewritableTextState = {
-    value: string;
-    isEditing: boolean;
-};
-export default class RewritableText extends Component<RewritableTextProps, RewritableTextState> {
-    constructor(props: RewritableTextProps);
-    toggleEditing: () => void;
-    onValueChange: (newValue: string) => void;
-    finalizeByKey: (e: React.KeyboardEvent) => void;
-    render(): JSX.Element;
-}
+export default function RewritableText(props: RewritableTextProps): JSX.Element;
 export {};
+//# sourceMappingURL=RewritableText.d.ts.map

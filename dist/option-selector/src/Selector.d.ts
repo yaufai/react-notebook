@@ -23,3 +23,4 @@ export declare class Selector extends Component<SelectorProps, SelectorState> {
     componentDidUpdate(): void;
     render(): JSX.Element;
 }
+//# sourceMappingURL=Selector.d.ts.map
