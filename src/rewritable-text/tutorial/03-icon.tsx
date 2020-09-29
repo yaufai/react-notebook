@@ -8,7 +8,7 @@ type RewritableTextProps = {
     onFinalized: (value: string) => void
 }
 
-export default function RewritableText(props: RewritableTextProps) {
+export function RewritableText(props: RewritableTextProps) {
     let [value, setValue] = useState(props.defaultValue)
     let [isEditing, setIsEditing] = useState(false)
 

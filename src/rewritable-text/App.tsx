@@ -1,5 +1,5 @@
 import React from "react"
-import RewritableText from "./src/RewritableText"
+import { RewritableText } from "./src/RewritableText"
 
 export default () => <RewritableText
                 defaultValue="ここのテキストは編集できます"

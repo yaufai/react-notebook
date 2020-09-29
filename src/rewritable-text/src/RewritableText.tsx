@@ -11,7 +11,7 @@ type RewritableTextProps = {
     validationErrMsg: (value: string) => string
 }
 
-export default function RewritableText(props: RewritableTextProps) {
+export function RewritableText(props: RewritableTextProps) {
     let [value, setValue] = useState(props.defaultValue)
     let [isEditing, setIsEditing] = useState(false)
     let [hasError, setHasError] = useState(false)
