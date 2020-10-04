@@ -22,23 +22,14 @@ export function RewritableText(props: RewritableTextProps) {
         props.onFinalized(value)
         toggleEditing()
     }
-
     let onKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === "Enter" && props.validation(value)) {
+        if (e.key === "Enter") {
             finalize()
         }
     }
 
-    let commonStyle = {
-        fontSize: "14px",
-        paddingTop: "5px",
-        paddingBottom: "5px",
-        paddingRight: "8px",
-        paddingLeft: "8px"
-    }
-
     let text = <div onClick={toggleEditing} style={{ cursor: "pointer" }}>
-        <span style={{ ...commonStyle, marginRight: "3px" }}>
+        <span style={{ marginRight: "6px" }}>
             {value !== "" ? value : props.displayWhenEmpty}
         </span>
         <FontAwesomeIcon icon={faPencilAlt} />
@@ -60,10 +51,6 @@ export function RewritableText(props: RewritableTextProps) {
             }}
             onKeyUp={onKeyUp}
             autoFocus={true}
-            style={{
-                ...commonStyle,
-                width: "100%"
-            }}
         />
         <div style={{
             color: "red",
